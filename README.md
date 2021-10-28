@@ -15,8 +15,12 @@ Other cool things: <br>
 ImGui menu <br>
 Pattern scanning <br>
 Netvar manager <br>
-Optimized code (I think)
+Optimized code (I think) <br>
+Multithreading
 
 Credits: <br>
-All code I've stolen has been creditted in the source <br>
+All code I've stolen has been credited in the source <br>
 [ocornut for ImGui](https://github.com/ocornut/imgui)
+
+Dependancies: <br>
+[DirectX9 SDK](https://www.microsoft.com/en-us/download/details.aspx?id=6812)
