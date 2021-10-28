@@ -1,6 +1,6 @@
 # csgo-external
 
-A CS:GO external cheat written for Windows
+A CS:GO external cheat written for Windows in C++
 
 ![Screenshot](screenshot.png)
 
@@ -22,5 +22,5 @@ Credits: <br>
 All code I've stolen has been credited in the source <br>
 [ocornut for ImGui](https://github.com/ocornut/imgui)
 
-Dependancies: <br>
+Dependencies: <br>
 [DirectX9 SDK](https://www.microsoft.com/en-us/download/details.aspx?id=6812)
