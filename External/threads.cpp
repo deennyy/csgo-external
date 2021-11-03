@@ -1,8 +1,8 @@
 #include "threads.h"
 
 void threads::check_thread() {
-	while (FindWindow(NULL, data::game_name) && data::shoud_continue) {
-		data::shoud_continue = true;
+	while (data::should_continue && FindWindow(NULL, data::game_name)) {
+		data::should_continue = true;
 
 		// i know this block of code might be retarded, but i really wanted to minimize wpm/rpm calls
 		if (globals::client_state) {
@@ -34,11 +34,11 @@ void threads::check_thread() {
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	}
 
-	data::shoud_continue = false;
+	data::should_continue = false;
 }
 
 void threads::main_thread() {
-	while (data::shoud_continue) {
+	while (data::should_continue) {
 		if (GetAsyncKeyState(VK_INSERT) & 1)
 			menu::open = !menu::open;
 
@@ -51,7 +51,7 @@ void threads::main_thread() {
 }
 
 void threads::triggerbot_thread() {
-	while (data::shoud_continue) {
+	while (data::should_continue) {
 		triggerbot::run();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -63,7 +63,7 @@ void threads::menu_thread() {
 }
 
 void threads::bhop_thread() {
-	while (data::shoud_continue) {
+	while (data::should_continue) {
 		bhop::run();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(10));

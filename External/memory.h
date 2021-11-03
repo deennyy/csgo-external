@@ -14,17 +14,17 @@ public:
 	c_memory(LPCWSTR game_name) {
 		if (!get_window_handle(game_name)) {
 			MessageBox(NULL, L"failed to open handle", L"error", MB_OK);
-			data::shoud_continue = false;
+			data::should_continue = false;
 		}
 
-		if (!get_process_id()) {
+		if (data::should_continue && !get_process_id()) {
 			MessageBox(NULL, L"failed to get pid", L"error", MB_OK);
-			data::shoud_continue = false;
+			data::should_continue = false;
 		}
 
-		if (!open_process()) {
+		if (data::should_continue && !open_process()) {
 			MessageBox(NULL, L"failed to open process", L"error", MB_OK);
-			data::shoud_continue = false;
+			data::should_continue = false;
 		}
 	}
 
@@ -33,14 +33,17 @@ public:
 	}
 
 	s_module get_module(LPCWSTR module_name) {
+		s_module mod = { NULL, NULL };
+		if (!data::should_continue)
+			return mod;
+
 		s_module temp = get_module_info(module_name);
 
 		if (!temp.base) {
 			wchar_t buffer[64];
 			swprintf_s(buffer, L"failed getting %s", module_name);
 			MessageBox(NULL, buffer, L"error", MB_OK);
-			data::shoud_continue = false;
-			s_module mod = { NULL, NULL };
+			data::should_continue = false;
 			return mod;
 		}
 

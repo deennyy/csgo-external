@@ -83,7 +83,7 @@ void menu::run()
 
     // Main loop
     bool done = false;
-    while (data::shoud_continue)
+    while (data::should_continue)
     {
         // Poll and handle messages (inputs, window resize, etc.)
         // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
@@ -96,9 +96,9 @@ void menu::run()
             ::TranslateMessage(&msg);
             ::DispatchMessage(&msg);
             if (msg.message == WM_QUIT)
-                data::shoud_continue = false;
+                data::should_continue = false;
         }
-        if (!data::shoud_continue)
+        if (!data::should_continue)
             break;
 
         if (!menu::open)

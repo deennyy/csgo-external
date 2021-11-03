@@ -6,8 +6,7 @@ struct s_module {
 	DWORD base, size;
 };
 
-class c_local_player {
-public:
+struct s_local_player {
 	DWORD pointer = NULL;
 	int team;
 };
@@ -29,7 +28,7 @@ namespace offsets {
 };
 
 namespace globals {
-	extern c_local_player local_player;
+	extern s_local_player local_player;
 	extern DWORD client_state;
 	extern DWORD glow_object_manager;
 	extern DWORD enemies[32];
@@ -42,5 +41,5 @@ namespace modules {
 
 namespace data {
 	extern LPCWSTR game_name;
-	extern bool shoud_continue;
+	extern bool should_continue;
 };

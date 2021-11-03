@@ -17,7 +17,7 @@ namespace offsets {
 };
 
 namespace globals {
-	c_local_player local_player;
+	s_local_player local_player;
 	DWORD client_state = NULL;
 	DWORD glow_object_manager = NULL;
 	DWORD enemies[32] = { NULL };
@@ -30,5 +30,5 @@ namespace modules {
 
 namespace data {
 	LPCWSTR game_name = L"Counter-Strike: Global Offensive";
-	bool shoud_continue = true;
+	bool should_continue = true;
 };

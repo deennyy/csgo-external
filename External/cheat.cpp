@@ -4,6 +4,9 @@ void cheat::startup() {
 	modules::engine = memory->get_module(L"engine.dll");
 	modules::client = memory->get_module(L"client.dll");
 
+	if (!data::should_continue)
+		return;
+
 	offsets::dwClientState = memory->pattern_scan(modules::engine, L"A1 ? ? ? ? 33 D2 6A 00 6A 00 33 C9 89 B0", 0x1, 0x0, true, true);
 	offsets::dwClientState_GetLocalPlayer = memory->pattern_scan(modules::engine, L"8B 80 ? ? ? ? 40 C3", 0x2, 0x0, true, false);
 	offsets::dwEntityList = memory->pattern_scan(modules::client, L"BB ? ? ? ? 83 FF 01 0F 8C ? ? ? ? 3B F8", 0x1, 0x0, true, true);
