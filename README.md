@@ -5,7 +5,7 @@ A CS:GO external cheat written for Windows in C++
 ![Screenshot](screenshot.png)
 
 Cheat features: <br>
-Chams (clRender) <br>
+Chams (clrRender) <br>
 Triggerbot <br>
 Glow <br>
 Bhop <br>

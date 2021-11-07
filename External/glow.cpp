@@ -34,15 +34,17 @@ void glow::run() {
 		for (int i = 0; i <= 31; i++) {
 			int glow_index = memory->read<int>(globals::enemies[i] + offsets::m_iGlowIndex);
 			DWORD glow_object_address = globals::glow_object_manager + glow_index * sizeof(glow_object_t);
+
+			if (!glow_object_address)
+				return;
+
 			glow_object_t glow_object = memory->read<glow_object_t>(glow_object_address);
 
-			glow_object.entity = globals::enemies[i];
 			glow_object.m_flRed = menu::glowcolor[0];
 			glow_object.m_flGreen = menu::glowcolor[1];
 			glow_object.m_flBlue = menu::glowcolor[2];
 			glow_object.m_flAlpha = menu::glowcolor[3];
 			glow_object.m_bRenderWhenOccluded = true;
-			glow_object.m_bRenderWhenUnoccluded = false;
 
 			memory->write<glow_object_t>(glow_object_address, glow_object);
 		}
@@ -59,11 +61,13 @@ void glow::run() {
 			for (int i = 0; i <= 31; i++) {
 				int glow_index = memory->read<int>(globals::enemies[i] + offsets::m_iGlowIndex);
 				DWORD glow_object_address = globals::glow_object_manager + glow_index * sizeof(glow_object_t);
+
+				if (!glow_object_address)
+					return;
+
 				glow_object_t glow_object = memory->read<glow_object_t>(glow_object_address);
 
-				glow_object.entity = globals::enemies[i];
 				glow_object.m_bRenderWhenOccluded = false;
-				glow_object.m_bRenderWhenUnoccluded = false;
 
 				memory->write<glow_object_t>(glow_object_address, glow_object);
 			}
@@ -86,11 +90,13 @@ void glow::undo() {
 	for (int i = 0; i <= 31; i++) {
 		int glow_index = memory->read<int>(globals::enemies[i] + offsets::m_iGlowIndex);
 		DWORD glow_object_address = globals::glow_object_manager + glow_index * sizeof(glow_object_t);
+
+		if (!glow_object_address)
+			return;
+
 		glow_object_t glow_object = memory->read<glow_object_t>(glow_object_address);
 
-		glow_object.entity = globals::enemies[i];
 		glow_object.m_bRenderWhenOccluded = false;
-		glow_object.m_bRenderWhenUnoccluded = false;
 
 		memory->write<glow_object_t>(glow_object_address, glow_object);
 	}

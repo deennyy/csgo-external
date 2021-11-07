@@ -14,6 +14,11 @@ namespace offsets {
 	DWORD dwForceAttack = NULL;
 	DWORD force_update_spectator_glow = NULL;
 	DWORD m_bSpotted = NULL;
+	DWORD m_bDormant = NULL;
+	DWORD m_iHealth = NULL;
+	DWORD m_lifeState = NULL;
+	DWORD m_bGunGameImmunity = NULL;
+	DWORD m_clrRender = NULL;
 };
 
 namespace globals {

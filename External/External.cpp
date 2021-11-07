@@ -15,6 +15,7 @@ int main() {
 	threads::run();
 
 	cheat::shutdown();
+
 	delete memory;
 
 	return EXIT_SUCCESS;

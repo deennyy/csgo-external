@@ -7,7 +7,7 @@ void triggerbot::run() {
 	if (!(GetAsyncKeyState(VK_XBUTTON2)))
 		return;
 
-	if (!globals::local_player.pointer)
+	if (!globals::local_player.pointer || globals::local_player.health <= 0 || globals::local_player.lifestate != 0)
 		return;
 
 	int xhair_id = memory->read<int>(globals::local_player.pointer + offsets::m_iCrosshairId);
@@ -19,8 +19,10 @@ void triggerbot::run() {
 			return;
 
 		int entityteam = memory->read<int>(entity + offsets::m_iTeamNum);
+		int entityhealth = memory->read<int>(entity + offsets::m_iHealth);
+		bool entitydormant = memory->read<bool>(entity + offsets::m_bDormant);
 
-		if (entityteam == globals::local_player.team)
+		if (entityteam == globals::local_player.team || entityhealth <= 0 || entitydormant)
 			return;
 
 		memory->write<int>(modules::client.base + offsets::dwForceAttack, 5);

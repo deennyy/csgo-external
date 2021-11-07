@@ -12,9 +12,9 @@ void chams::run() { // from uc
 		toggle = true;
 
 		for (int i = 0; i <= 31; i++) {
-			memory->write<BYTE>(globals::enemies[i] + 0x70, menu::chamscolor[0] * 255.f);
-			memory->write<BYTE>(globals::enemies[i] + 0x71, menu::chamscolor[1] * 255.f);
-			memory->write<BYTE>(globals::enemies[i] + 0x72, menu::chamscolor[2] * 255.f);
+			memory->write<BYTE>(globals::enemies[i] + offsets::m_clrRender, menu::chamscolor[0] * 255.f);
+			memory->write<BYTE>(globals::enemies[i] + (offsets::m_clrRender + 0x1), menu::chamscolor[1] * 255.f);
+			memory->write<BYTE>(globals::enemies[i] + (offsets::m_clrRender + 0x2), menu::chamscolor[2] * 255.f);
 		}
 
 		DWORD thisPtr = (int)(modules::engine.base + offsets::model_ambient_min - 0x2c);
@@ -26,9 +26,9 @@ void chams::run() { // from uc
 			toggle = false;
 
 			for (int i = 0; i <= 31; i++) {
-				memory->write<BYTE>(globals::enemies[i] + 0x70, 255.f);
-				memory->write<BYTE>(globals::enemies[i] + 0x71, 255.f);
-				memory->write<BYTE>(globals::enemies[i] + 0x72, 255.f);
+				memory->write<BYTE>(globals::enemies[i] + offsets::m_clrRender, 255.f);
+				memory->write<BYTE>(globals::enemies[i] + (offsets::m_clrRender + 0x1), 255.f);
+				memory->write<BYTE>(globals::enemies[i] + (offsets::m_clrRender + 0x2), 255.f);
 			}
 
 			DWORD thisPtr = (int)(modules::engine.base + offsets::model_ambient_min - 0x2c);
@@ -47,9 +47,9 @@ void chams::undo() {
 		return;
 
 	for (int i = 0; i <= 31; i++) {
-		memory->write<BYTE>(globals::enemies[i] + 0x70, 255.f);
-		memory->write<BYTE>(globals::enemies[i] + 0x71, 255.f);
-		memory->write<BYTE>(globals::enemies[i] + 0x72, 255.f);
+		memory->write<BYTE>(globals::enemies[i] + offsets::m_clrRender, 255.f);
+		memory->write<BYTE>(globals::enemies[i] + (offsets::m_clrRender + 0x1), 255.f);
+		memory->write<BYTE>(globals::enemies[i] + (offsets::m_clrRender + 0x2), 255.f);
 	}
 
 	DWORD thisPtr = (int)(modules::engine.base + offsets::model_ambient_min - 0x2c);

@@ -104,7 +104,7 @@ private:
 			for (int i = 0; i < (cbNeeded / sizeof(HMODULE)); i++) {
 				wchar_t _module_name[MAX_PATH];
 
-				if (GetModuleBaseName(handle, module_array[i], _module_name, sizeof(_module_name) / sizeof(char))) {
+				if (GetModuleBaseName(handle, module_array[i], _module_name, sizeof(_module_name) / sizeof(wchar_t))) {
 					if (!wcscmp(_module_name, module_name)) {
 						MODULEINFO modinfo;
 						GetModuleInformation(handle, module_array[i], &modinfo, sizeof(modinfo));
@@ -133,8 +133,6 @@ private:
 	DWORD pid = NULL;
 	HMODULE module_array[1024];
 	DWORD cbNeeded;
-
-public:
 	HANDLE handle = NULL;
 };
 

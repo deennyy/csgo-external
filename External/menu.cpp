@@ -10,7 +10,7 @@ namespace menu {
     float glowcolor[4] = { 1.f, 0.f, 0.f, 0.8f };
     bool bhop = false;
     bool radar = false;
-};
+}
 
 // Data
 static LPDIRECT3D9              g_pD3D = NULL;

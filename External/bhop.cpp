@@ -7,7 +7,7 @@ void bhop::run() {
 	if (!(GetAsyncKeyState(VK_SPACE)))
 		return;
 
-	if (!globals::local_player.pointer)
+	if (!globals::local_player.pointer || globals::local_player.health <= 0 || globals::local_player.lifestate != 0)
 		return;
 
 	int flags = memory->read<int>(globals::local_player.pointer + offsets::m_fFlags);

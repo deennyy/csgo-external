@@ -15,9 +15,11 @@ void cheat::startup() {
 	offsets::dwGlowObjectManager = memory->pattern_scan(modules::client, L"A1 ? ? ? ? A8 01 75 4B", 0x1, 0x4, true, true);
 	offsets::dwForceAttack = memory->pattern_scan(modules::client, L"89 0D ? ? ? ? 8B 0D ? ? ? ? 8B F2 8B C1 83 CE 04", 0x2, 0x0, true, true);
 	offsets::force_update_spectator_glow = memory->pattern_scan(modules::client, L"74 07 8B CB E8 ? ? ? ? 83 C7 10", 0x0, 0x0, false, true);
-	DWORD dwGetAllClasses = memory->pattern_scan(modules::client, L"A1 ? ? ? ? C3 CC CC CC CC CC CC CC CC CC CC A1 ? ? ? ? B9", 0x1, 0x0, false, false);
+	offsets::m_bDormant = memory->pattern_scan(modules::client, L"8A 81 ? ? ? ? C3 32 C0", 0x2, 0x8, true, false);
 
 	globals::client_state = memory->read<DWORD>(modules::engine.base + offsets::dwClientState);
+
+	DWORD dwGetAllClasses = memory->pattern_scan(modules::client, L"A1 ? ? ? ? C3 CC CC CC CC CC CC CC CC CC CC A1 ? ? ? ? B9", 0x1, 0x0, false, false);
 	DWORD dwGetAllClasses_deref = memory->read<DWORD>(dwGetAllClasses);
 	DWORD dwGetAllClasses_offset = memory->read<DWORD>(dwGetAllClasses_deref) - modules::client.base;
 
@@ -28,6 +30,10 @@ void cheat::startup() {
 	offsets::m_iGlowIndex = NetvarManager->NETVAR("DT_CSPlayer", "m_flFlashDuration") + 0x18;
 	offsets::m_iCrosshairId = NetvarManager->NETVAR("DT_CSPlayer", "m_bHasDefuser") + 0x5C;
 	offsets::m_bSpotted = NetvarManager->NETVAR("DT_BaseEntity", "m_bSpotted");
+	offsets::m_iHealth = NetvarManager->NETVAR("DT_BasePlayer", "m_iHealth");
+	offsets::m_lifeState = NetvarManager->NETVAR("DT_CSPlayer", "m_lifeState");
+	offsets::m_bGunGameImmunity = NetvarManager->NETVAR("DT_CSPlayer", "m_bGunGameImmunity");
+	offsets::m_clrRender = NetvarManager->NETVAR("DT_BaseEntity", "m_clrRender");
 }
 
 void cheat::shutdown() {

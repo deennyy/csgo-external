@@ -8,7 +8,8 @@ struct s_module {
 
 struct s_local_player {
 	DWORD pointer = NULL;
-	int team;
+	int team, health;
+	BYTE lifestate;
 };
 
 namespace offsets {
@@ -25,6 +26,11 @@ namespace offsets {
 	extern DWORD dwForceAttack;
 	extern DWORD force_update_spectator_glow;
 	extern DWORD m_bSpotted;
+	extern DWORD m_bDormant;
+	extern DWORD m_iHealth;
+	extern DWORD m_lifeState;
+	extern DWORD m_bGunGameImmunity;
+	extern DWORD m_clrRender;
 };
 
 namespace globals {
