@@ -120,6 +120,11 @@ void menu::run()
         ImGui::ColorEdit3("##chamscolor", menu::chamscolor, ImGuiColorEditFlags_NoInputs);
         ImGui::SliderFloat("brightness", &menu::chamsbright, 0.f, 10.f);
         ImGui::Checkbox("triggerbot", &menu::triggerbot);
+        if (ImGui::IsItemHovered()) {
+            ImGui::BeginTooltip();
+            ImGui::Text("key is mouse5");
+            ImGui::EndTooltip();
+        }
         ImGui::Checkbox("glow", &menu::glow);
         ImGui::SameLine();
         ImGui::ColorEdit4("##glowcolor", menu::glowcolor, ImGuiColorEditFlags_NoInputs);
