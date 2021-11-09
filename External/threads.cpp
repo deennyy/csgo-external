@@ -7,10 +7,11 @@ void threads::check_thread() {
 		// i know this block of code might be retarded, but i really wanted to minimize wpm/rpm calls
 		if (globals::client_state) {
 			globals::local_player.pointer = memory->read<DWORD>(modules::client.base + offsets::dwEntityList + (memory->read<int>(globals::client_state + offsets::dwClientState_GetLocalPlayer)) * 0x10);
-			globals::local_player.team = memory->read<int>(globals::local_player.pointer + offsets::m_iTeamNum);
-			globals::local_player.health = memory->read<int>(globals::local_player.pointer + offsets::m_iHealth);
-			globals::local_player.lifestate = memory->read<BYTE>(globals::local_player.pointer + offsets::m_lifeState);
 			if (globals::local_player.pointer) {
+				globals::local_player.team = memory->read<int>(globals::local_player.pointer + offsets::m_iTeamNum);
+				globals::local_player.health = memory->read<int>(globals::local_player.pointer + offsets::m_iHealth);
+				globals::local_player.lifestate = memory->read<BYTE>(globals::local_player.pointer + offsets::m_lifeState);
+
 				for (int i = 1; i <= 64; i++) {
 					DWORD entity = memory->read<DWORD>(modules::client.base + offsets::dwEntityList + i * 0x10);
 
