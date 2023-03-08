@@ -8,7 +8,7 @@ void chams::run() { // from uc
 	if (!globals::local_player.pointer)
 		return;
 
-	if (menu::chams) {
+	if (menu_bools.chams) {
 		toggle = true;
 
 		for (int i = 0; i <= 31; i++) {
@@ -46,7 +46,7 @@ void chams::run() { // from uc
 }
 
 void chams::undo() {
-	if (menu::chams)
+	if (menu_bools.chams)
 		return;
 
 	if (!globals::local_player.pointer)

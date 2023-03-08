@@ -1,7 +1,7 @@
 #include "radar.h"
 
 void radar::run() {
-	if (!menu::radar)
+	if (!menu_bools.radar)
 		return;
 
 	if (!globals::local_player.pointer)

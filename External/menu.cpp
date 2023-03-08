@@ -1,29 +1,20 @@
 #include "menu.h"
 
 namespace menu {
-    bool open = true;
-    bool chams = false;
     float chamscolor[3] = { 0.f, 1.f, 0.f };
     float chamsbright = 2.f;
-    bool triggerbot = false;
-    bool glow = false;
     float glowcolor[4] = { 1.f, 0.f, 0.f, 0.8f };
-    bool bhop = false;
-    bool radar = false;
-    bool boxesp = false;;
     float boxespcol[4] = { 1.f, 0.f, 0.f, 1.f };
-    bool nameesp = false;
     float nameespcol[4] = { 1.f, 0.f, 0.f, 1.f };
-    bool weaponesp = false;
     float weaponespcol[4] = { 1.f, 0.f, 0.f, 1.f };
-    bool aimbot = false;
     float smooth = 1.f;
     float rcs = 1.f;
-    bool hpesp = false;
     float hpespcol[4] = { 1.f, 0.f, 0.f, 1.f };
 
     bool should_write = false;
 }
+
+s_menu_bools menu_bools;
 
 // Data
 static LPDIRECT3D9              g_pD3D = NULL;
@@ -138,7 +129,7 @@ void menu::run()
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        if (menu::open) {
+        if (menu_bools.open) {
             if (!should_write) {
                 ImGui::SetNextWindowPos(ImVec2(200, 200));
                 ImGui::SetNextWindowSize(ImVec2(500, 600));
@@ -150,36 +141,36 @@ void menu::run()
                 should_write = true;
             }
 
-            ImGui::Begin("denny's external", &menu::open, ImGuiWindowFlags_NoSavedSettings);
+            ImGui::Begin("denny's external", &menu_bools.open, ImGuiWindowFlags_NoSavedSettings);
 
-            ImGui::Checkbox("chams", &menu::chams);
+            ImGui::Checkbox("chams", &menu_bools.chams);
             ImGui::SameLine();
             ImGui::ColorEdit3("##chamscolor", menu::chamscolor, ImGuiColorEditFlags_NoInputs);
             ImGui::SliderFloat("brightness", &menu::chamsbright, 0.f, 10.f);
-            ImGui::Checkbox("triggerbot", &menu::triggerbot);
+            ImGui::Checkbox("triggerbot", &menu_bools.triggerbot);
             if (ImGui::IsItemHovered()) {
                 ImGui::BeginTooltip();
                 ImGui::Text("key is mouse5");
                 ImGui::EndTooltip();
             }
-            ImGui::Checkbox("glow", &menu::glow);
+            ImGui::Checkbox("glow", &menu_bools.glow);
             ImGui::SameLine();
             ImGui::ColorEdit4("##glowcolor", menu::glowcolor, ImGuiColorEditFlags_NoInputs);
-            ImGui::Checkbox("bhop", &menu::bhop);
-            ImGui::Checkbox("radar", &menu::radar);
-            ImGui::Checkbox("box esp", &menu::boxesp);
+            ImGui::Checkbox("bhop", &menu_bools.bhop);
+            ImGui::Checkbox("radar", &menu_bools.radar);
+            ImGui::Checkbox("box esp", &menu_bools.boxesp);
             ImGui::SameLine();
             ImGui::ColorEdit4("##boxespcol", menu::boxespcol, ImGuiColorEditFlags_NoInputs);
-            ImGui::Checkbox("name esp", &menu::nameesp);
+            ImGui::Checkbox("name esp", &menu_bools.nameesp);
             ImGui::SameLine();
             ImGui::ColorEdit4("##nameespcol", menu::nameespcol, ImGuiColorEditFlags_NoInputs);
-            ImGui::Checkbox("weapon esp", &menu::weaponesp);
+            ImGui::Checkbox("weapon esp", &menu_bools.weaponesp);
             ImGui::SameLine();
             ImGui::ColorEdit4("##weapespcol", menu::weaponespcol, ImGuiColorEditFlags_NoInputs);
-            ImGui::Checkbox("health esp", &menu::hpesp);
+            ImGui::Checkbox("health esp", &menu_bools.hpesp);
             ImGui::SameLine();
             ImGui::ColorEdit4("##hpespcol", menu::hpespcol, ImGuiColorEditFlags_NoInputs);
-            ImGui::Checkbox("aimbot", &menu::aimbot);
+            ImGui::Checkbox("aimbot", &menu_bools.aimbot);
             if (ImGui::IsItemHovered()) {
                 ImGui::BeginTooltip();
                 ImGui::Text("key is mouse1");
@@ -188,6 +179,9 @@ void menu::run()
             ImGui::SliderFloat("smoothing", &menu::smooth, 1.f, 100.f);
             ImGui::SliderFloat("rcs", &menu::rcs, 1.f, 2.f);
             
+            if (ImGui::Button("stop cheat", ImVec2(200.f, 100.f)))
+                data::should_continue = false;
+
             ImGui::End();
         }
         else {
@@ -209,23 +203,23 @@ void menu::run()
 
         draw_list->AddText(ImVec2(100, 40), ImColor(ImVec4(1.f, 0.f, 0.f, 1.f)), "denny's external");
 
-        if (boxesp) {
+        if (menu_bools.boxesp) {
             esp::box(draw_list);
         }
 
-        if (nameesp) {
+        if (menu_bools.nameesp) {
             esp::name(draw_list);
         }
 
-        if (weaponesp) {
+        if (menu_bools.weaponesp) {
             esp::weapon(draw_list);
         }
 
-        if (hpesp) {
+        if (menu_bools.hpesp) {
             esp::health(draw_list);
         }
 
-        if (aimbot) {
+        if (menu_bools.aimbot) {
             aimbot::run();
         }
 

@@ -398,6 +398,20 @@ namespace data {
 	extern int screen_height;
 	extern int cs_window_width;
 	extern int cs_window_height;
-	extern int cs_window_x;
-	extern int cs_window_y;
 };
+
+struct s_menu_bools {
+	bool open = true;
+	bool chams = false;
+	bool triggerbot = false;
+	bool glow = false;
+	bool bhop = false;
+	bool radar = false;
+	bool boxesp = false;;
+	bool nameesp = false;
+	bool weaponesp = false;
+	bool aimbot = false;
+	bool hpesp = false;
+};
+
+extern s_menu_bools menu_bools;

@@ -39,7 +39,7 @@ void threads::check_thread() {
 void threads::main_thread() {
 	while (data::should_continue) {
 		if (GetAsyncKeyState(VK_INSERT) & 1)
-			menu::open = !menu::open;
+			menu_bools.open = !menu_bools.open;
 
 		chams::run();
 		glow::run();

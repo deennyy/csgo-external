@@ -28,7 +28,7 @@ void glow::run() {
 	if (!globals::local_player.pointer)
 		return;
 
-	if (menu::glow) {
+	if (menu_bools.glow) {
 		toggle = true;
 
 		for (int i = 0; i <= 31; i++) {
@@ -87,7 +87,7 @@ void glow::run() {
 }
 
 void glow::undo() {
-	if (menu::glow)
+	if (menu_bools.glow)
 		return;
 
 	if (!globals::local_player.pointer)

@@ -1,7 +1,7 @@
 #include "bhop.h"
 
 void bhop::run() {
-	if (!menu::bhop)
+	if (!menu_bools.bhop)
 		return;
 
 	if (!globals::local_player.pointer || globals::local_player.health <= 0 || globals::local_player.lifestate != 0)

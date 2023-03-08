@@ -1,7 +1,7 @@
 #include "triggerbot.h"
 
 void triggerbot::run() {
-	if (!menu::triggerbot)
+	if (!menu_bools.triggerbot)
 		return;
 
 	if (!(GetAsyncKeyState(VK_XBUTTON2)))

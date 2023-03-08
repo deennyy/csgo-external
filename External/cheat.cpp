@@ -53,10 +53,10 @@ void cheat::startup() {
 }
 
 void cheat::shutdown() {
-	menu::chams = false;
+	menu_bools.chams = false;
 	chams::toggle = false;
 	chams::undo();
-	menu::glow = false;
+	menu_bools.glow = false;
 	glow::toggle = false;
 	glow::undo();
 }

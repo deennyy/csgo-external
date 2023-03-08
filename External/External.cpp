@@ -5,7 +5,7 @@
 
 c_memory* memory;
 
-int main() {
+int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow) {
 	FreeConsole();
 
 	memory = new c_memory(data::game_name);

@@ -51,6 +51,4 @@ namespace data {
 	int screen_height;
 	int cs_window_width = 0;
 	int cs_window_height = 0;
-	int cs_window_x = 0;
-	int cs_window_y = 0;
 };
