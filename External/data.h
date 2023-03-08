@@ -407,7 +407,7 @@ struct s_menu_bools {
 	bool glow = false;
 	bool bhop = false;
 	bool radar = false;
-	bool boxesp = false;;
+	bool boxesp = false;
 	bool nameesp = false;
 	bool weaponesp = false;
 	bool aimbot = false;
