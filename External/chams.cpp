@@ -12,6 +12,9 @@ void chams::run() { // from uc
 		toggle = true;
 
 		for (int i = 0; i <= 31; i++) {
+			if (!globals::enemies[i])
+				continue;
+
 			memory->write<BYTE>(globals::enemies[i] + offsets::m_clrRender, menu::chamscolor[0] * 255.f);
 			memory->write<BYTE>(globals::enemies[i] + (offsets::m_clrRender + 0x1), menu::chamscolor[1] * 255.f);
 			memory->write<BYTE>(globals::enemies[i] + (offsets::m_clrRender + 0x2), menu::chamscolor[2] * 255.f);
@@ -26,6 +29,9 @@ void chams::run() { // from uc
 			toggle = false;
 
 			for (int i = 0; i <= 31; i++) {
+				if (!globals::enemies[i])
+					continue;
+
 				memory->write<BYTE>(globals::enemies[i] + offsets::m_clrRender, 255.f);
 				memory->write<BYTE>(globals::enemies[i] + (offsets::m_clrRender + 0x1), 255.f);
 				memory->write<BYTE>(globals::enemies[i] + (offsets::m_clrRender + 0x2), 255.f);
@@ -47,6 +53,9 @@ void chams::undo() {
 		return;
 
 	for (int i = 0; i <= 31; i++) {
+		if (!globals::enemies[i])
+			continue;
+
 		memory->write<BYTE>(globals::enemies[i] + offsets::m_clrRender, 255.f);
 		memory->write<BYTE>(globals::enemies[i] + (offsets::m_clrRender + 0x1), 255.f);
 		memory->write<BYTE>(globals::enemies[i] + (offsets::m_clrRender + 0x2), 255.f);

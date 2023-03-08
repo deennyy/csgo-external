@@ -8,6 +8,11 @@
 
 #include "data.h"
 
+#include <dwmapi.h>
+
+#include "esp.h"
+#include "aimbot.h"
+
 namespace menu {
 	void run();
 
@@ -20,4 +25,17 @@ namespace menu {
 	extern float glowcolor[4];
 	extern bool bhop;
 	extern bool radar;
+	extern bool boxesp;
+	extern float boxespcol[4];
+	extern bool nameesp;
+	extern float nameespcol[4];
+	extern bool weaponesp;
+	extern float weaponespcol[4];
+	extern bool aimbot;
+	extern float smooth;
+	extern float rcs;
+	extern bool hpesp;
+	extern float hpespcol[4];
+
+	extern bool should_write;
 };

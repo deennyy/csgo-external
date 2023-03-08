@@ -129,11 +129,13 @@ private:
 		return true;
 	}
 
-	HWND hwnd = NULL;
 	DWORD pid = NULL;
 	HMODULE module_array[1024];
 	DWORD cbNeeded;
 	HANDLE handle = NULL;
+
+public:
+	HWND hwnd = NULL;
 };
 
 extern c_memory* memory;

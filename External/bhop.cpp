@@ -4,17 +4,17 @@ void bhop::run() {
 	if (!menu::bhop)
 		return;
 
-	if (!(GetAsyncKeyState(VK_SPACE)))
-		return;
-
 	if (!globals::local_player.pointer || globals::local_player.health <= 0 || globals::local_player.lifestate != 0)
 		return;
 
 	int flags = memory->read<int>(globals::local_player.pointer + offsets::m_fFlags);
 
-	if (flags == 257) {
-		memory->write<int>(modules::client.base + offsets::dwForceJump, 1);
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
-		memory->write<int>(modules::client.base + offsets::dwForceJump, 0);
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000 && (flags & (1 << 0))) {
+		memory->write<int>(modules::client.base + offsets::dwForceJump, 5);
+	}
+	else if (GetAsyncKeyState(VK_SPACE) & 0x8000 && !(flags & (1 << 0))) {
+		memory->write<int>(modules::client.base + offsets::dwForceJump, 4);
+		memory->write<int>(modules::client.base + offsets::dwForceJump, 5);
+		memory->write<int>(modules::client.base + offsets::dwForceJump, 4);
 	}
 }

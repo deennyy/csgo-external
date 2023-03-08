@@ -4,6 +4,11 @@ A CS:GO external cheat written for Windows in C++
 
 ![Screenshot](screenshot.png)
 
+A lot of new things added in the newest update: <br>
+Aimbot, ESP (overlay), a lot of things fixed
+
+Cheat works in both borderless and windowed mode <br>
+
 Cheat features: <br>
 Chams (clrRender) <br>
 Triggerbot <br>

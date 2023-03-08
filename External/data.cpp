@@ -19,6 +19,15 @@ namespace offsets {
 	DWORD m_lifeState = NULL;
 	DWORD m_bGunGameImmunity = NULL;
 	DWORD m_clrRender = NULL;
+	DWORD dwViewMatrix = NULL;
+	DWORD m_vecOrigin = NULL;
+	DWORD dwClientState_PlayerInfo = NULL;
+	DWORD m_hMyWeapons = NULL;
+	DWORD m_vecViewOffset = NULL;
+	DWORD dwClientState_ViewAngles = NULL;
+	DWORD m_aimPunchAngle = NULL;
+	DWORD m_dwBoneMatrix = NULL;
+	DWORD m_iItemDefinitionIndex = NULL;
 };
 
 namespace globals {
@@ -26,6 +35,8 @@ namespace globals {
 	DWORD client_state = NULL;
 	DWORD glow_object_manager = NULL;
 	DWORD enemies[32] = { NULL };
+	DWORD user_info_table = NULL;
+	DWORD items = NULL;
 };
 
 namespace modules {
@@ -34,6 +45,12 @@ namespace modules {
 };
 
 namespace data {
-	LPCWSTR game_name = L"Counter-Strike: Global Offensive";
+	LPCWSTR game_name = L"Counter-Strike: Global Offensive - Direct3D 9";
 	bool should_continue = true;
+	int screen_width;
+	int screen_height;
+	int cs_window_width = 0;
+	int cs_window_height = 0;
+	int cs_window_x = 0;
+	int cs_window_y = 0;
 };

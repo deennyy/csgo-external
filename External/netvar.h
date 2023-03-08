@@ -5,11 +5,11 @@
 #include <string>
 #include "memory.h"
 
-struct ghetto1 { // yes ik this is ghetto asf fight me
+struct asd1 {
 	char str[128];
 };
 
-struct ghetto2 {
+struct asd2 {
 	char str[128];
 };
 
@@ -19,8 +19,8 @@ private:
 	public:
 		std::string GetTableName() {
 			DWORD offset = memory->read<DWORD>((DWORD)this + 0xC);
-			ghetto1 ghetto = memory->read<ghetto1>(offset);
-			return std::string(ghetto.str);
+			asd1 asd = memory->read<asd1>(offset);
+			return std::string(asd.str);
 		}
 		void* GetProperty(int i) { // RecvProp*
 			return (void*)(memory->read<DWORD>((DWORD)this) + 0x3C * i);
@@ -42,8 +42,8 @@ private:
 	public:
 		std::string GetVarName() {
 			DWORD offset = memory->read<DWORD>((DWORD)this);
-			ghetto2 ghetto = memory->read<ghetto2>(offset);
-			return std::string(ghetto.str);
+			asd2 asd = memory->read<asd2>(offset);
+			return std::string(asd.str);
 		}
 		int GetOffset() {
 			return memory->read<int>((DWORD)this + 0x2C);

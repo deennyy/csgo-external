@@ -10,6 +10,19 @@ namespace menu {
     float glowcolor[4] = { 1.f, 0.f, 0.f, 0.8f };
     bool bhop = false;
     bool radar = false;
+    bool boxesp = false;;
+    float boxespcol[4] = { 1.f, 0.f, 0.f, 1.f };
+    bool nameesp = false;
+    float nameespcol[4] = { 1.f, 0.f, 0.f, 1.f };
+    bool weaponesp = false;
+    float weaponespcol[4] = { 1.f, 0.f, 0.f, 1.f };
+    bool aimbot = false;
+    float smooth = 1.f;
+    float rcs = 1.f;
+    bool hpesp = false;
+    float hpespcol[4] = { 1.f, 0.f, 0.f, 1.f };
+
+    bool should_write = false;
 }
 
 // Data
@@ -26,11 +39,32 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 // Main code
 void menu::run() 
 {
+    RECT cs_rect = { -1 };
+    GetWindowRect(memory->hwnd, &cs_rect);
+
+    auto width = cs_rect.right - cs_rect.left;
+    auto height = cs_rect.bottom - cs_rect.top;
+    int x, y;
+
+    if (width == data::screen_width && height == data::screen_height) {
+        data::cs_window_width = width;
+        data::cs_window_height = height;
+        x = 0;
+        y = 0;
+    }
+    else {
+        data::cs_window_width = width - 2;
+        data::cs_window_height = height - 27;
+        x = cs_rect.left - 1;
+        y = cs_rect.top + 26;
+    }
+
     // Create application window
     //ImGui_ImplWin32_EnableDpiAwareness();
-    WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
+    WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("denny's external"), NULL };
     ::RegisterClassEx(&wc);
-    HWND hwnd = ::CreateWindow(wc.lpszClassName, _T("denny's external"), (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX), 100, 100, 514, 638, NULL, NULL, wc.hInstance, NULL);
+    HWND hwnd = ::CreateWindowEx(WS_EX_LTRREADING | WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_NOACTIVATE, wc.lpszClassName, _T("denny's external"), WS_POPUP | WS_MAXIMIZE, x, y, data::cs_window_width, data::cs_window_height, NULL, NULL, wc.hInstance, NULL);
+    MARGINS margins = { -1 };
 
     // Initialize Direct3D
     if (!CreateDeviceD3D(hwnd))
@@ -41,9 +75,10 @@ void menu::run()
     }
 
     // Show the window
+    ::SetLayeredWindowAttributes(hwnd, 0, 255, LWA_ALPHA);
     ::ShowWindow(hwnd, SW_SHOWDEFAULT);
     ::UpdateWindow(hwnd);
-    ::SetWindowPos(hwnd, HWND_TOPMOST, 100, 100, 514, 638, 0);
+    ::DwmExtendFrameIntoClientArea(hwnd, &margins);
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -77,12 +112,9 @@ void menu::run()
     //IM_ASSERT(font != NULL);
 
     // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 0.00f);
 
     // Main loop
-    bool done = false;
     while (data::should_continue)
     {
         // Poll and handle messages (inputs, window resize, etc.)
@@ -101,35 +133,101 @@ void menu::run()
         if (!data::should_continue)
             break;
 
-        if (!menu::open)
-            ShowWindow(hwnd, SW_MINIMIZE);
-        else
-            ShowWindow(hwnd, SW_SHOWDEFAULT);
-
         // Start the Dear ImGui frame
         ImGui_ImplDX9_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
 
-        ImGui::SetNextWindowPos(ImVec2(-1, 0));
-        ImGui::SetNextWindowSize(ImVec2(500, 600));
-        ImGui::Begin("##mainwindow", &menu::open, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoSavedSettings);
+        if (menu::open) {
+            if (!should_write) {
+                ImGui::SetNextWindowPos(ImVec2(200, 200));
+                ImGui::SetNextWindowSize(ImVec2(500, 600));
+                LONG style = (WS_EX_LTRREADING | WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_NOACTIVATE);
+                SetWindowLong(hwnd, GWL_EXSTYLE, style);
+                SetForegroundWindow(hwnd);
+                SetActiveWindow(hwnd);
+                SetFocus(hwnd);
+                should_write = true;
+            }
 
-        ImGui::Checkbox("chams", &menu::chams);
-        ImGui::SameLine();
-        ImGui::ColorEdit3("##chamscolor", menu::chamscolor, ImGuiColorEditFlags_NoInputs);
-        ImGui::SliderFloat("brightness", &menu::chamsbright, 0.f, 10.f);
-        ImGui::Checkbox("triggerbot", &menu::triggerbot);
-        if (ImGui::IsItemHovered()) {
-            ImGui::BeginTooltip();
-            ImGui::Text("key is mouse5");
-            ImGui::EndTooltip();
+            ImGui::Begin("denny's external", &menu::open, ImGuiWindowFlags_NoSavedSettings);
+
+            ImGui::Checkbox("chams", &menu::chams);
+            ImGui::SameLine();
+            ImGui::ColorEdit3("##chamscolor", menu::chamscolor, ImGuiColorEditFlags_NoInputs);
+            ImGui::SliderFloat("brightness", &menu::chamsbright, 0.f, 10.f);
+            ImGui::Checkbox("triggerbot", &menu::triggerbot);
+            if (ImGui::IsItemHovered()) {
+                ImGui::BeginTooltip();
+                ImGui::Text("key is mouse5");
+                ImGui::EndTooltip();
+            }
+            ImGui::Checkbox("glow", &menu::glow);
+            ImGui::SameLine();
+            ImGui::ColorEdit4("##glowcolor", menu::glowcolor, ImGuiColorEditFlags_NoInputs);
+            ImGui::Checkbox("bhop", &menu::bhop);
+            ImGui::Checkbox("radar", &menu::radar);
+            ImGui::Checkbox("box esp", &menu::boxesp);
+            ImGui::SameLine();
+            ImGui::ColorEdit4("##boxespcol", menu::boxespcol, ImGuiColorEditFlags_NoInputs);
+            ImGui::Checkbox("name esp", &menu::nameesp);
+            ImGui::SameLine();
+            ImGui::ColorEdit4("##nameespcol", menu::nameespcol, ImGuiColorEditFlags_NoInputs);
+            ImGui::Checkbox("weapon esp", &menu::weaponesp);
+            ImGui::SameLine();
+            ImGui::ColorEdit4("##weapespcol", menu::weaponespcol, ImGuiColorEditFlags_NoInputs);
+            ImGui::Checkbox("health esp", &menu::hpesp);
+            ImGui::SameLine();
+            ImGui::ColorEdit4("##hpespcol", menu::hpespcol, ImGuiColorEditFlags_NoInputs);
+            ImGui::Checkbox("aimbot", &menu::aimbot);
+            if (ImGui::IsItemHovered()) {
+                ImGui::BeginTooltip();
+                ImGui::Text("key is mouse1");
+                ImGui::EndTooltip();
+            }
+            ImGui::SliderFloat("smoothing", &menu::smooth, 1.f, 100.f);
+            ImGui::SliderFloat("rcs", &menu::rcs, 1.f, 2.f);
+            
+            ImGui::End();
         }
-        ImGui::Checkbox("glow", &menu::glow);
-        ImGui::SameLine();
-        ImGui::ColorEdit4("##glowcolor", menu::glowcolor, ImGuiColorEditFlags_NoInputs);
-        ImGui::Checkbox("bhop", &menu::bhop);
-        ImGui::Checkbox("radar", &menu::radar);
+        else {
+            if (should_write) {
+                LONG style = (WS_EX_LTRREADING | WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_NOACTIVATE | WS_EX_TRANSPARENT);
+                SetWindowLong(hwnd, GWL_EXSTYLE, style);
+                ImGui::SetNextWindowPos(ImVec2(0, 0));
+                ImGui::SetNextWindowSize(ImVec2(data::cs_window_width, data::cs_window_height));
+                SetForegroundWindow(memory->hwnd);
+                SetActiveWindow(memory->hwnd);
+                SetFocus(memory->hwnd);
+                should_write = false;
+            }
+        }
+
+        ImGui::Begin("##overlay", NULL, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+
+        ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+        draw_list->AddText(ImVec2(100, 40), ImColor(ImVec4(1.f, 0.f, 0.f, 1.f)), "denny's external");
+
+        if (boxesp) {
+            esp::box(draw_list);
+        }
+
+        if (nameesp) {
+            esp::name(draw_list);
+        }
+
+        if (weaponesp) {
+            esp::weapon(draw_list);
+        }
+
+        if (hpesp) {
+            esp::health(draw_list);
+        }
+
+        if (aimbot) {
+            aimbot::run();
+        }
 
         ImGui::End();
 
@@ -173,11 +271,11 @@ bool CreateDeviceD3D(HWND hWnd)
     ZeroMemory(&g_d3dpp, sizeof(g_d3dpp));
     g_d3dpp.Windowed = TRUE;
     g_d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-    g_d3dpp.BackBufferFormat = D3DFMT_UNKNOWN; // Need to use an explicit format with alpha if needing per-pixel alpha composition.
+    g_d3dpp.BackBufferFormat = D3DFMT_A8R8G8B8; // Need to use an explicit format with alpha if needing per-pixel alpha composition.
     g_d3dpp.EnableAutoDepthStencil = TRUE;
     g_d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
-    g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;           // Present with vsync
-    //g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;   // Present without vsync, maximum unthrottled framerate
+    //g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_ONE;           // Present with vsync
+    g_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;   // Present without vsync, maximum unthrottled framerate
     if (g_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd, D3DCREATE_HARDWARE_VERTEXPROCESSING, &g_d3dpp, &g_pd3dDevice) < 0)
         return false;
 

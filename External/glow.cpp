@@ -32,6 +32,9 @@ void glow::run() {
 		toggle = true;
 
 		for (int i = 0; i <= 31; i++) {
+			if (!globals::enemies[i])
+				continue;
+
 			int glow_index = memory->read<int>(globals::enemies[i] + offsets::m_iGlowIndex);
 			DWORD glow_object_address = globals::glow_object_manager + glow_index * sizeof(glow_object_t);
 
@@ -59,6 +62,9 @@ void glow::run() {
 			toggle = false;
 
 			for (int i = 0; i <= 31; i++) {
+				if (!globals::enemies[i])
+					continue;
+
 				int glow_index = memory->read<int>(globals::enemies[i] + offsets::m_iGlowIndex);
 				DWORD glow_object_address = globals::glow_object_manager + glow_index * sizeof(glow_object_t);
 
@@ -88,6 +94,9 @@ void glow::undo() {
 		return;
 
 	for (int i = 0; i <= 31; i++) {
+		if (!globals::enemies[i])
+			continue;
+
 		int glow_index = memory->read<int>(globals::enemies[i] + offsets::m_iGlowIndex);
 		DWORD glow_object_address = globals::glow_object_manager + glow_index * sizeof(glow_object_t);
 

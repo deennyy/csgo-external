@@ -11,21 +11,12 @@ void threads::check_thread() {
 				globals::local_player.team = memory->read<int>(globals::local_player.pointer + offsets::m_iTeamNum);
 				globals::local_player.health = memory->read<int>(globals::local_player.pointer + offsets::m_iHealth);
 				globals::local_player.lifestate = memory->read<BYTE>(globals::local_player.pointer + offsets::m_lifeState);
+				globals::local_player.origin = memory->read<vec3>(globals::local_player.pointer + offsets::m_vecOrigin);
 
 				for (int i = 1; i <= 64; i++) {
 					DWORD entity = memory->read<DWORD>(modules::client.base + offsets::dwEntityList + i * 0x10);
 
 					if (!entity)
-						continue;
-
-					int entityteam = memory->read<int>(entity + offsets::m_iTeamNum);
-					int entityhealth = memory->read<int>(entity + offsets::m_iHealth);
-					bool entitydormant = memory->read<bool>(entity + offsets::m_bDormant);
-					BYTE entitylifestate = memory->read<BYTE>(entity + offsets::m_lifeState);
-					bool entityimmunity = memory->read<bool>(entity + offsets::m_bGunGameImmunity);
-					int entityclassid = memory->read<int>(memory->read<int>(memory->read<int>(memory->read<int>(entity + 0x8) + 0x8) + 0x1) + 0x14);
-
-					if (entityteam == globals::local_player.team || entityhealth <= 0 || entitydormant || entitylifestate != 0 || entityimmunity || entityclassid != 40)
 						continue;
 
 					globals::enemies[i] = entity;
