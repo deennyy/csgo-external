@@ -10,7 +10,7 @@ void aimbot::run() {
 	qangle viewangles = memory->read<qangle>(globals::client_state + offsets::dwClientState_ViewAngles);
 	qangle punchangles = memory->read<qangle>(globals::local_player.pointer + offsets::m_aimPunchAngle);
 
-	for (int i = 0; i <= 31; i++) {
+	for (int i = 0; i < 64; i++) {
 		if (!globals::enemies[i])
 			continue;
 
@@ -32,8 +32,11 @@ void aimbot::run() {
 		vec3 delta = head - eyeangles;
 
 		qangle angles = ((qangle(atan2(-delta.z, hypot(delta.x, delta.y) * 180.0f / M_PI), atan2(delta.y, delta.x) * (180.0f / M_PI), 0.f) - (viewangles + (punchangles * menu::rcs))) / menu::smooth) + viewangles;
+		qangle fov_angles = (qangle(atan2(-delta.z, hypot(delta.x, delta.y) * 180.0f / M_PI), atan2(delta.y, delta.x) * (180.0f / M_PI), 0.f) - (viewangles + (punchangles)));
 
-		if (GetAsyncKeyState(VK_LBUTTON)) {
+		const auto fov = std::hypot(fov_angles.pitch, fov_angles.yaw);
+
+		if (GetAsyncKeyState(VK_LBUTTON) && fov < menu::aimbotfov) {
 			cheat::clamp_angles(angles);
 			memory->write<qangle>(globals::client_state + offsets::dwClientState_ViewAngles, angles);
 		}

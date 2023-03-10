@@ -28,8 +28,6 @@ void triggerbot::run() {
 		if (entityteam == globals::local_player.team || entityhealth <= 0 || entitydormant || entitylifestate != 0 || entityimmunity || entityclassid != 40)
 			return;
 
-		memory->write<int>(modules::client.base + offsets::dwForceAttack, 5);
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
-		memory->write<int>(modules::client.base + offsets::dwForceAttack, 4);
+		memory->write<int>(modules::client.base + offsets::dwForceAttack, 6);
 	}
 }

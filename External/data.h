@@ -10,7 +10,9 @@ struct vec3 {
 	float x, y, z;
 
 	vec3(void) {
-
+		this->x = 0;
+		this->y = 0;
+		this->z = 0;
 	}
 
 	vec3(float x, float y, float z) {
@@ -38,7 +40,9 @@ struct qangle {
 	float pitch, yaw, roll;
 
 	qangle(void) {
-
+		this->pitch = 0;
+		this->yaw = 0;
+		this->roll = 0;
 	}
 
 	qangle(float pitch, float yaw, float roll) {
@@ -71,7 +75,7 @@ struct qangle {
 };
 
 struct s_local_player {
-	DWORD pointer = NULL;
+	DWORD pointer;
 	int team, health;
 	BYTE lifestate;
 	vec3 origin;
@@ -381,7 +385,7 @@ namespace globals {
 	extern s_local_player local_player;
 	extern DWORD client_state;
 	extern DWORD glow_object_manager;
-	extern DWORD enemies[32];
+	extern DWORD enemies[64];
 	extern DWORD user_info_table;
 	extern DWORD items;
 };

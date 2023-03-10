@@ -11,8 +11,17 @@ void chams::run() { // from uc
 	if (menu_bools.chams) {
 		toggle = true;
 
-		for (int i = 0; i <= 31; i++) {
+		for (int i = 0; i < 64; i++) {
 			if (!globals::enemies[i])
+				continue;
+
+			int entityteam = memory->read<int>(globals::enemies[i] + offsets::m_iTeamNum);
+			int entityhealth = memory->read<int>(globals::enemies[i] + offsets::m_iHealth);
+			bool entitydormant = memory->read<bool>(globals::enemies[i] + offsets::m_bDormant);
+			BYTE entitylifestate = memory->read<BYTE>(globals::enemies[i] + offsets::m_lifeState);
+			int entityclassid = memory->read<int>(memory->read<int>(memory->read<int>(memory->read<int>(globals::enemies[i] + 0x8) + 0x8) + 0x1) + 0x14);
+
+			if (entityteam == globals::local_player.team || entityhealth <= 0 || entitydormant || entitylifestate != 0 || entityclassid != 40)
 				continue;
 
 			memory->write<BYTE>(globals::enemies[i] + offsets::m_clrRender, menu::chamscolor[0] * 255.f);
@@ -28,8 +37,17 @@ void chams::run() { // from uc
 		if (toggle) {
 			toggle = false;
 
-			for (int i = 0; i <= 31; i++) {
+			for (int i = 0; i < 64; i++) {
 				if (!globals::enemies[i])
+					continue;
+
+				int entityteam = memory->read<int>(globals::enemies[i] + offsets::m_iTeamNum);
+				int entityhealth = memory->read<int>(globals::enemies[i] + offsets::m_iHealth);
+				bool entitydormant = memory->read<bool>(globals::enemies[i] + offsets::m_bDormant);
+				BYTE entitylifestate = memory->read<BYTE>(globals::enemies[i] + offsets::m_lifeState);
+				int entityclassid = memory->read<int>(memory->read<int>(memory->read<int>(memory->read<int>(globals::enemies[i] + 0x8) + 0x8) + 0x1) + 0x14);
+
+				if (entityteam == globals::local_player.team || entityhealth <= 0 || entitydormant || entitylifestate != 0 || entityclassid != 40)
 					continue;
 
 				memory->write<BYTE>(globals::enemies[i] + offsets::m_clrRender, 255.f);
@@ -52,8 +70,17 @@ void chams::undo() {
 	if (!globals::local_player.pointer)
 		return;
 
-	for (int i = 0; i <= 31; i++) {
+	for (int i = 0; i < 64; i++) {
 		if (!globals::enemies[i])
+			continue;
+
+		int entityteam = memory->read<int>(globals::enemies[i] + offsets::m_iTeamNum);
+		int entityhealth = memory->read<int>(globals::enemies[i] + offsets::m_iHealth);
+		bool entitydormant = memory->read<bool>(globals::enemies[i] + offsets::m_bDormant);
+		BYTE entitylifestate = memory->read<BYTE>(globals::enemies[i] + offsets::m_lifeState);
+		int entityclassid = memory->read<int>(memory->read<int>(memory->read<int>(memory->read<int>(globals::enemies[i] + 0x8) + 0x8) + 0x1) + 0x14);
+
+		if (entityteam == globals::local_player.team || entityhealth <= 0 || entitydormant || entitylifestate != 0 || entityclassid != 40)
 			continue;
 
 		memory->write<BYTE>(globals::enemies[i] + offsets::m_clrRender, 255.f);

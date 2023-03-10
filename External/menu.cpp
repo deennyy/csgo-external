@@ -10,6 +10,7 @@ namespace menu {
     float smooth = 1.f;
     float rcs = 1.f;
     float hpespcol[4] = { 1.f, 0.f, 0.f, 1.f };
+    float aimbotfov = 1.f;
 
     bool should_write = false;
 }
@@ -131,18 +132,46 @@ void menu::run()
 
         if (menu_bools.open) {
             if (!should_write) {
-                ImGui::SetNextWindowPos(ImVec2(200, 200));
+                ImGui::SetNextWindowPos(ImVec2(20, 20));
                 ImGui::SetNextWindowSize(ImVec2(500, 600));
                 LONG style = (WS_EX_LTRREADING | WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_NOACTIVATE);
                 SetWindowLong(hwnd, GWL_EXSTYLE, style);
+                auto this_thread = GetWindowThreadProcessId(hwnd, NULL);
+                auto csgo_thread = GetWindowThreadProcessId(memory->hwnd, NULL);
+                AttachThreadInput(this_thread, csgo_thread, true);
                 SetForegroundWindow(hwnd);
                 SetActiveWindow(hwnd);
                 SetFocus(hwnd);
+                AttachThreadInput(this_thread, csgo_thread, false);
                 should_write = true;
+
+                RECT cs_rect = { -1 };
+                GetWindowRect(memory->hwnd, &cs_rect);
+
+                auto width = cs_rect.right - cs_rect.left;
+                auto height = cs_rect.bottom - cs_rect.top;
+                int x, y;
+
+                if (width == data::screen_width && height == data::screen_height) {
+                    data::cs_window_width = width;
+                    data::cs_window_height = height;
+                    x = 0;
+                    y = 0;
+                }
+                else {
+                    data::cs_window_width = width - 2;
+                    data::cs_window_height = height - 27;
+                    x = cs_rect.left - 1;
+                    y = cs_rect.top + 26;
+                }
+
+                SetWindowPos(hwnd, HWND_TOP, x, y, width, height, NULL);
             }
 
             ImGui::Begin("denny's external", &menu_bools.open, ImGuiWindowFlags_NoSavedSettings);
 
+            ImGui::Text("if you switch resolution, move the window, switch to borderless, etc");
+            ImGui::Text("just open and close the menu for the overlay to align again");
             ImGui::Checkbox("chams", &menu_bools.chams);
             ImGui::SameLine();
             ImGui::ColorEdit3("##chamscolor", menu::chamscolor, ImGuiColorEditFlags_NoInputs);
@@ -176,6 +205,7 @@ void menu::run()
                 ImGui::Text("key is mouse1");
                 ImGui::EndTooltip();
             }
+            ImGui::SliderFloat("fov", &menu::aimbotfov, 1.f, 180.f);
             ImGui::SliderFloat("smoothing", &menu::smooth, 1.f, 100.f);
             ImGui::SliderFloat("rcs", &menu::rcs, 1.f, 2.f);
             
@@ -203,21 +233,7 @@ void menu::run()
 
         draw_list->AddText(ImVec2(100, 40), ImColor(ImVec4(1.f, 0.f, 0.f, 1.f)), "denny's external");
 
-        if (menu_bools.boxesp) {
-            esp::box(draw_list);
-        }
-
-        if (menu_bools.nameesp) {
-            esp::name(draw_list);
-        }
-
-        if (menu_bools.weaponesp) {
-            esp::weapon(draw_list);
-        }
-
-        if (menu_bools.hpesp) {
-            esp::health(draw_list);
-        }
+        esp::run(draw_list);
 
         if (menu_bools.aimbot) {
             aimbot::run();

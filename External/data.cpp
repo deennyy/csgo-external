@@ -31,10 +31,10 @@ namespace offsets {
 };
 
 namespace globals {
-	s_local_player local_player;
+	s_local_player local_player = { NULL };
 	DWORD client_state = NULL;
 	DWORD glow_object_manager = NULL;
-	DWORD enemies[32] = { NULL };
+	DWORD enemies[64] = { NULL };
 	DWORD user_info_table = NULL;
 	DWORD items = NULL;
 };
@@ -47,8 +47,8 @@ namespace modules {
 namespace data {
 	LPCWSTR game_name = L"Counter-Strike: Global Offensive - Direct3D 9";
 	bool should_continue = true;
-	int screen_width;
-	int screen_height;
+	int screen_width = 0;
+	int screen_height = 0;
 	int cs_window_width = 0;
 	int cs_window_height = 0;
 };
