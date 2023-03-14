@@ -46,7 +46,7 @@ void esp::ammo(ImDrawList* draw_list, DWORD entity) {
 		DWORD weapon_entity = memory->read<DWORD>(modules::client.base + offsets::dwEntityList + ((active_weapon_handle - 1) * 0x10));
 		int entityammo = memory->read<int>(weapon_entity + offsets::m_iClip1);
 
-		draw_list->AddText(ImVec2(head.x + (width / 2), feet.y - (dist / 45.f) + 10.f), ImColor(ImVec4(menu::nameespcol[0], menu::nameespcol[1], menu::nameespcol[2], menu::nameespcol[3])), std::to_string(entityammo).c_str());
+		draw_list->AddText(ImVec2(head.x + (width / 2), feet.y - (dist / 45.f) + 10.f), ImColor(ImVec4(menu::ammoespcol[0], menu::ammoespcol[1], menu::ammoespcol[2], menu::ammoespcol[3])), std::to_string(entityammo).c_str());
 	}
 }
 
