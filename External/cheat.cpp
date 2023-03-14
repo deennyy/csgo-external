@@ -46,6 +46,7 @@ void cheat::startup() {
 	offsets::m_hMyWeapons = NetvarManager->NETVAR("DT_BasePlayer", "m_hMyWeapons");
 	offsets::m_vecViewOffset = NetvarManager->NETVAR("DT_CSPlayer", "m_vecViewOffset[0]");
 	offsets::m_dwBoneMatrix = NetvarManager->NETVAR("DT_BaseAnimating", "m_nForceBone") + 0x1C;
+	offsets::m_iClip1 = NetvarManager->NETVAR("DT_BaseCombatWeapon", "m_iClip1");
 
 	// these are offsets that i for some reason cannot get with the netvar manager, just wont work
 	offsets::m_aimPunchAngle = 0x303C;

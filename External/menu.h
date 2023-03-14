@@ -26,6 +26,7 @@ namespace menu {
 	extern float rcs;
 	extern float hpespcol[4];
 	extern float aimbotfov;
+	extern float ammoespcol[4];
 
 	extern bool should_write;
 };

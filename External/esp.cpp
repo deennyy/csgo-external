@@ -28,7 +28,7 @@ void esp::weapon(ImDrawList* draw_list, DWORD entity) {
 		DWORD weapon_entity = memory->read<DWORD>(modules::client.base + offsets::dwEntityList + ((active_weapon_handle & 0xFFF) - 1) * 0x10);
 		int weapon_index = memory->read<int>(weapon_entity + offsets::m_iItemDefinitionIndex);
 
-		draw_list->AddText(ImVec2(head.x + (width / 2), feet.y - (dist / 45.f)), ImColor(ImVec4(menu::nameespcol[0], menu::nameespcol[1], menu::nameespcol[2], menu::nameespcol[3])), cheat::weapon_id_to_str(weapon_index));
+		draw_list->AddText(ImVec2(head.x + (width / 2), feet.y - (dist / 45.f)), ImColor(ImVec4(menu::weaponespcol[0], menu::weaponespcol[1], menu::weaponespcol[2], menu::weaponespcol[3])), cheat::weapon_id_to_str(weapon_index));
 	}
 }
 
@@ -36,7 +36,17 @@ void esp::health(ImDrawList* draw_list, DWORD entity) {
 	if (feet.z > 0.01f) {
 		int entityhealth = memory->read<int>(entity + offsets::m_iHealth);
 
-		draw_list->AddText(ImVec2(head.x + (width / 2) - 20.f, head.y - (dist / 45.f)), ImColor(ImVec4(1.f, 0.f, 0.f, 1.f)), std::to_string(entityhealth).c_str());
+		draw_list->AddText(ImVec2(head.x + (width / 2) - 20.f, head.y - (dist / 45.f)), ImColor(ImVec4(menu::hpespcol[0], menu::hpespcol[1], menu::hpespcol[2], menu::hpespcol[3])), std::to_string(entityhealth).c_str());
+	}
+}
+
+void esp::ammo(ImDrawList* draw_list, DWORD entity) {
+	if (feet.z > 0.01f) {
+		DWORD active_weapon_handle = memory->read<DWORD>(entity + offsets::m_hMyWeapons) & 0xFFF;
+		DWORD weapon_entity = memory->read<DWORD>(modules::client.base + offsets::dwEntityList + ((active_weapon_handle - 1) * 0x10));
+		int entityammo = memory->read<int>(weapon_entity + offsets::m_iClip1);
+
+		draw_list->AddText(ImVec2(head.x + (width / 2), feet.y - (dist / 45.f) + 10.f), ImColor(ImVec4(menu::nameespcol[0], menu::nameespcol[1], menu::nameespcol[2], menu::nameespcol[3])), std::to_string(entityammo).c_str());
 	}
 }
 
@@ -76,5 +86,8 @@ void esp::run(ImDrawList* draw_list) {
 
 		if (menu_bools.hpesp)
 			health(draw_list, globals::enemies[i]);
+
+		if (menu_bools.ammoesp)
+			ammo(draw_list, globals::enemies[i]);
 	}
 }

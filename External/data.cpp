@@ -28,6 +28,7 @@ namespace offsets {
 	DWORD m_aimPunchAngle = NULL;
 	DWORD m_dwBoneMatrix = NULL;
 	DWORD m_iItemDefinitionIndex = NULL;
+	DWORD m_iClip1 = NULL;
 };
 
 namespace globals {

@@ -379,6 +379,7 @@ namespace offsets {
 	extern DWORD m_aimPunchAngle;
 	extern DWORD m_dwBoneMatrix;
 	extern DWORD m_iItemDefinitionIndex;
+	extern DWORD m_iClip1;
 };
 
 namespace globals {
@@ -416,6 +417,7 @@ struct s_menu_bools {
 	bool weaponesp = false;
 	bool aimbot = false;
 	bool hpesp = false;
+	bool ammoesp = false;
 };
 
 extern s_menu_bools menu_bools;

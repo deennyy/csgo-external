@@ -11,6 +11,7 @@ namespace menu {
     float rcs = 1.f;
     float hpespcol[4] = { 1.f, 0.f, 0.f, 1.f };
     float aimbotfov = 1.f;
+    float ammoespcol[4] = { 1.f, 0.f, 0.f, 1.f };
 
     bool should_write = false;
 }
@@ -199,6 +200,9 @@ void menu::run()
             ImGui::Checkbox("health esp", &menu_bools.hpesp);
             ImGui::SameLine();
             ImGui::ColorEdit4("##hpespcol", menu::hpespcol, ImGuiColorEditFlags_NoInputs);
+            ImGui::Checkbox("ammo esp", &menu_bools.ammoesp);
+            ImGui::SameLine();
+            ImGui::ColorEdit4("##ammoespcol", menu::ammoespcol, ImGuiColorEditFlags_NoInputs);
             ImGui::Checkbox("aimbot", &menu_bools.aimbot);
             if (ImGui::IsItemHovered()) {
                 ImGui::BeginTooltip();
